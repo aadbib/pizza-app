@@ -1,0 +1,62 @@
+{% extends "home/layout.html" %}
+{% load static %}
+
+{% block header %}
+<ul style="margin-right: 19%;" class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'menu' %}">Menu</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'shopping_cart' %}">Cart</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'orders' %}">Orders<span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout_view' %}">Logout</a>
+    </li>
+</ul>
+{% endblock %}
+
+{% block body %}
+{% include "inventory/top_img.html" %}
+<div class="menu-bottom-container">
+    <div class="menu-container">
+        <table id="menutable" class="table table-borderless">
+            <thead>
+                <tr><th colspan="6" class="menuheader"><em>Orders</em></th></tr>
+            </thead>
+            {% for o, f in order.items %}
+                {% if f %}
+                    <thead>
+                        <tr>
+                            {% if is_admin %}
+                                <th colspan="6" class="pizzaheader"><em>{{ o.user_id|title }} | Order-{{ o.id }}</em></th>
+                            {% else %}
+                                <th colspan="6" class="pizzaheader"><em>Order-{{ o.id }}</em></th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    {% for food in f %}
+                        <tbody>
+                            <tr>
+                                <td>{{ food }}<td>
+                                <td>{{ food.name.price }}{{food.price}}</td>
+                            </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="3" style="text-align:center;">Total price: <b>${{ o.order_price }}</b></td>
+                    </tr>
+                    <tr style="text-align:center;">
+                            <td colspan="3"><b>Status:</b> <img class="ordered" src="{% static 'orders/ordered.png' %}" alt="Check" /></td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

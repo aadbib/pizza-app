@@ -1,0 +1,61 @@
+{% extends "home/layout.html" %}
+{% load static %}
+
+{% block header %}
+{% include "orders/navbar.html" %}
+{% endblock %}
+
+{% block body %}
+{% include "inventory/top_img.html" %}
+<div class="menu-bottom-container">
+    {% if message %}
+    <div class="alert alert-info delete" role="alert">
+        {{ message }}
+    </div>
+    {% endif %}
+    <div class="menu-container">
+        <form action="{% url 'shopping_cart' %}" method="post">
+            {% csrf_token %}
+            <table id="menutable" class="table table-borderless">
+                <thead>
+                    <tr><th colspan="6" class="menuheader"><em>Shopping Cart</em></th></tr>
+                </thead>
+                {% for o, f in order.items %}
+                    {% if f %}
+                        <thead>
+                            <tr>
+                                <th colspan="6" class="pizzaheader"><em>Order-{{ o.id}}</em></th>
+                            </tr>
+                        </thead>
+                        {% for food in f %}
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <button style="float:left;" type="submit" name="food_item" value="{{ food.name.food_type }}/{{ food.id }}" onclick="return confirm('Are you sure you want to delete the food_item?')" class="close" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        {{ food }}
+                                    <td>
+                                    <td>{{ food.name.price }}{{food.price}}</td>
+                                </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="3" style="text-align:center;">Total price: <b>${{ o.order_price }}</b></td>
+                        </tr>
+                        <tr style="text-align:center;">
+                            {% if not o.ordered %}
+                                <td><input type="submit" name="delete" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete the order?')"/></td>
+                                <td><input type="submit" name="complete" value="Complete" class="btn btn-success" onclick="return confirm('Are you sure you want to complete the order?')"/></td>
+                                <td></td>
+                            {% else %}
+                                <td colspan="3"><b>Status:</b> <img class="ordered" src="{% static 'orders/ordered.png' %}" alt="Check" /></td>
+                            {% endif %}
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+{% endblock %}

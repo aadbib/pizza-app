@@ -1,0 +1,92 @@
+{% extends "home/layout.html" %}
+
+{% block header %}
+<ul class="navbar-nav ml-auto">
+{% if not user.is_authenticated %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'index' %}">Home<span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'login_view' %}">Login</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'register' %}">Register</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+    </li>
+{%endif %}
+{% if user.is_authenticated %}
+    </ul>
+    <ul style="margin-right: 19%;" class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'menu' %}">Menu</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'shopping_cart' %}">Cart</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'orders' %}">Orders</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout_view' %}">Logout</a>
+        </li>
+{%endif %}
+</ul>
+{% endblock %}
+
+{% block body %}
+<div class="middle-container">
+    <img class="home-img" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.npr.org%2Fassets%2Fimg%2F2017%2F10%2F05%2Fgettyimages-147532653_wide-ffd291987837d8c24dfd3ced46119dbbbdc7080d-s1200.jpg&f=1&nofb=1" alt="Beautiful Place" />
+    <div id="eigen_table" class="table table-sm">
+        <p>Excellent service at Piatto Italiano:</p>
+        <table class="table table-borderless" style="background-color: rgba(255, 255, 255, 0.3);">
+            <thead>
+                <tr class="table_headers">
+                    <th></th>
+                    <th scope="col">Fresh</th>
+                    <th scope="col">Toppings</th>
+                    <th scope="col">Delivery</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th style="color: red;">Pizza</th>
+                    <td><img class="check" src="https://freeiconshop.com/wp-content/uploads/edd/checkmark-flat.png"></td>
+                    <td><img class="check" src="https://freeiconshop.com/wp-content/uploads/edd/checkmark-flat.png"></td>
+                    <td><img class="check" src="https://freeiconshop.com/wp-content/uploads/edd/checkmark-flat.png"></td>
+                </tr>
+                <tr>
+                    <th style="color: white;">Pasta</th>
+                    <td><img class= "check" src="https://freeiconshop.com/wp-content/uploads/edd/checkmark-flat.png"></td>
+                    <td><img class= "warning" src="https://icon-library.net/images/warning-icon-svg/warning-icon-svg-10.jpg"></td>
+                    <td><img class="check" src="https://freeiconshop.com/wp-content/uploads/edd/checkmark-flat.png"></td>
+                </tr>
+                <tr>
+                    <th style="color: green;">Platters</th>
+                    <td><img class= "check" src="https://freeiconshop.com/wp-content/uploads/edd/checkmark-flat.png"></td>
+                    <td><img class= "warning" src="https://icon-library.net/images/warning-icon-svg/warning-icon-svg-10.jpg"></td>
+                    <td><img class= "uncheck" src="http://www.myiconfinder.com/uploads/iconsets/256-256-ec140ce32ea8619e2b1dce4fad3b0d48-cross.png"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% if not user.is_authenticated %}
+<footer>
+    <div class="container">
+        <div class="row">
+            <div id="last-col" class="col">
+                <img src="https://www.nowcreativegroup.com/wp-content/uploads/2015/06/Now-Startup-Logo-Clear-Blue-Smaller1.png">
+            </div>
+            <div class="col">
+                <a href="{% url 'register' %}"><button type="button" class="btn btn-outline-primary">Register</button></a>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endif %}
+{% endblock %}

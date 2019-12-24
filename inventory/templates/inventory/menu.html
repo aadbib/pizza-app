@@ -1,0 +1,125 @@
+{% extends "home/layout.html" %}
+{% load static %}
+
+{% block header %}
+{% include "inventory/navbar.html" %}
+{% endblock %}
+
+{% block body %}
+{% include "inventory/top_img.html" %}
+<div class="menu-bottom-container">
+    <div class="menu-container">
+        <table id="menutable" class="table table-borderless">
+            <thead>
+                <tr>
+                    <th colspan="6" class="menuheader"><em>Menu</em></th>
+                </tr>
+                {% include "inventory/nav.html" %}
+            </thead>
+            <tbody>
+            <tr>
+                <th colspan="6" class="pizzaheader"><a name="pizza"><em>Pizza's</em></a></th>
+            </tr>
+            <tr>
+                <th colspan="4"></th>
+                <th style="font-size: 1.1em;">Small</th>
+                <th style="font-size: 1.1em;">Large</th>
+            </tr>
+            {% for type in pizza_types %}
+                <tr>
+                    <td colspan="2" class="menu_item">
+                        <a href="{% url 'menu_food' food_slug=type.slug %}">{{ type.pizza_type }}</a>
+                    </td>
+                    <td colspan="2"></td>
+                    {% for price in pizza_prices %}
+                        {% if type.pizza_type == price.pizza_type %}
+                            <td>{{ price.price }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            {% include "inventory/nav.html" %}
+            <tr>
+                <th colspan="6" class="pizzaheader"><a name="toppings"><em>Toppings</em></a></th>
+            </tr>
+            {% for top in toppings %}
+                <tr>
+                    <td colspan="6" class="menu_item" style="text-align: center;">{{ top.name }}</td>
+                </tr>
+            {% endfor %}
+            {% include "inventory/nav.html" %}
+            <tr>
+                <th colspan="6" class="pizzaheader"><a name="subs"><em>Subs</em></a></th>
+            </tr>
+            <tr>
+                <th colspan="4"></th>
+                <th style="font-size: 1.1em;">Small</th>
+                <th style="font-size: 1.1em;">Large</th>
+            </tr>
+            {% for type in sub_types %}
+                <tr>
+                    <td colspan="2" class="menu_item">
+                        <a href="{% url 'menu_food' food_slug=type.slug %}">{{ type.sub_type }}</a>
+                    </td>
+                    <td colspan="2"></td>
+                    {% for price in sub_prices %}
+                        {% if type.sub_type == price.sub_type %}
+                            {% if price.sub_type == "Sausage, Peppers & Onions" %}
+                                <td></td>
+                            {% endif %}
+                            <td>{{ price.price }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            {% include "inventory/nav.html" %}
+            <tr>
+                <th colspan="6" class="pizzaheader"><a name="pasta"><em>Pasta</em></a></th>
+            </tr>
+            {% for pasta in pastas %}
+                <tr>
+                    <td colspan="4" class="menu_item">
+                        <a href="{% url 'menu_food' food_slug=pasta.slug %}">{{ pasta.name }}</a>
+                    </td>
+                    <td style="float: right;">{{ pasta.price }}</td>
+                </tr>
+            {% endfor %}
+            {% include "inventory/nav.html" %}
+            <tr>
+                <th colspan="6" class="pizzaheader"><a name="salad"><em>Salads</em></a></th>
+            </tr>
+            {% for salad in salads %}
+                <tr>
+                    <td colspan="4" class="menu_item">
+                        <a href="{% url 'menu_food' food_slug=salad.slug %}">{{ salad.name }}</a>
+                    </td>
+                    <td style="float: right;">{{ salad.price }}</td>
+                </tr>
+            {% endfor %}
+            {% include "inventory/nav.html" %}
+            <tr>
+                <th colspan="6" class="pizzaheader"><a name="dinner_platters"><em>Dinner Platters</em></a></th>
+            </tr>
+            <tr>
+                <th colspan="4"></th>
+                <th style="font-size: 1.1em;">Small</th>
+                <th style="font-size: 1.1em;">Large</th>
+            </tr>
+            {% for type in dinner_types %}
+                <tr>
+                    <td colspan="2" class="menu_item">
+                        <a href="{% url 'menu_food' food_slug=type.slug %}">{{ type.dinner_platters_type }}</a>
+                    </td>
+                    <td colspan="2"></td>
+                    {% for price in dinner_prices %}
+                        {% if type.dinner_platters_type == price.dinner_platters_type %}
+                            <td>{{ price.price }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
